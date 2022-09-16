@@ -171,7 +171,6 @@ print(separator)
 
 var inputArray14: [Int]
 var stringArray14: [String]
-var finalPasword: String
 var numbers = [Int]()
 var firstThreeSum = Int()
 
@@ -187,6 +186,47 @@ func getNumbers(input: [String]) -> [Int]?{
     }
     return numbers
 }
+
+func isPasswordChecked(pas: String) -> Bool {
+    let array = pas.map { String($0) }
+    for item in 0 ..< array.count - 1 {
+        if array[item] == array[item + 1] {
+            return false
+        }
+    }
+    return true
+}
+
+func generatePassword(numbers: [Int]) -> String {
+    var finalPasword: String
+    let a = numbers[0]
+    let b = numbers[1]
+    let c = numbers[2]
+    let n = numbers[3]
+    let passwordCharsLower = "abcdefghijklmnopqrstuvwxyz"
+    let passwordCharsUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+    let passwordCharsNumber = "1234567890"
+    let passwordCharsAdditional = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+    //var charsMeetConditions = ""
+    let passwodrUpper = String((0..<a).compactMap { _ in passwordCharsUpper.randomElement()})
+    let passwodrLower = String((0..<b).compactMap { _ in passwordCharsLower.randomElement()})
+    let passwodrNumber = String((0..<c).compactMap { _ in passwordCharsNumber.randomElement()})
+    let possibleFinalChars = passwodrUpper + passwodrLower + passwodrNumber
+    if possibleFinalChars.count < n {
+        let additionalChar = String((0..<(n - possibleFinalChars.count)).compactMap { _ in passwordCharsAdditional.randomElement()})
+        finalPasword = possibleFinalChars + additionalChar
+    } else {
+        finalPasword = possibleFinalChars
+    }
+    var finalShuffledPassword = String()
+    
+    repeat {
+    finalShuffledPassword = String(finalPasword.shuffled())
+    } while !isPasswordChecked(pas: finalShuffledPassword)
+    //print("проверка пароля \(isPasswordChecked(pas: "r6yy3M5qs3BDU"))")
+   return finalShuffledPassword
+}
+
 
 repeat {
     let message14 = "   #######    Работа 14 Введите A, B, C, N через пробел. A, B, C, N неотрицательные целые числа и A+B+C<=N    #######"
@@ -207,28 +247,7 @@ repeat {
     }
 } while true
 
-
-let a = numbers[0]
-let b = numbers[1]
-let c = numbers[2]
-let n = numbers[3]
-let passwordCharsLower = "abcdefghijklmnopqrstuvwxyz"
-let passwordCharsUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-let passwordCharsNumber = "1234567890"
-let passwordCharsAdditional = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-var charsMeetConditions = ""
-let passwodrUpper = String((0..<a).compactMap { _ in passwordCharsUpper.randomElement()})
-let passwodrLower = String((0..<b).compactMap { _ in passwordCharsLower.randomElement()})
-let passwodrNumber = String((0..<c).compactMap { _ in passwordCharsNumber.randomElement()})
-let possibleFinalChars = passwodrUpper + passwodrLower + passwodrNumber
-if possibleFinalChars.count < n {
-    let additionalChar = String((0..<(n - possibleFinalChars.count)).compactMap { _ in passwordCharsAdditional.randomElement()})
-    finalPasword = possibleFinalChars + additionalChar
-} else {
-    finalPasword = possibleFinalChars
-}
-let finalShuffledPassword = String(finalPasword.shuffled())
-print(finalShuffledPassword)
+print(generatePassword(numbers: numbers))
 print(separator)
 
 
