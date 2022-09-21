@@ -18,10 +18,10 @@ var res = [String]()
 
 func checkWord(word: String) -> [String] {
     for character in word {
-        res = alphabet.filter{$0 != String(character)}
+        res = alphabet.filter{ $0 != String(character) }
         alphabet = res
     }
-    if res.count == 0 {res = alphabet}
+    if res.count == 0 { res = alphabet }
     return res
 }
 
@@ -46,7 +46,7 @@ print(separator)
 //Напишите программу, которая читает комбинацию букв и цифр и печатает первую цифру в ней. Гарантируется, что в комбинации есть хотя бы одна цифра.
 var message10 = "   #######    Работа 10 Введите комбинацию букв и цифр  #######"
  
-func findNumber(_ word: String) -> Bool{
+func findNumber(_ word: String) -> Bool {
     for character in word {
         if let intValue = character.wholeNumberValue {
             print("Первая встретившаяся цифра \(intValue)")
@@ -56,7 +56,7 @@ func findNumber(_ word: String) -> Bool{
     return false
 }
  
-if !findNumber(readInput(message: message10)) { print("Цифр нет")}
+if !findNumber(readInput(message: message10)) { print("Цифр нет") }
 
 print(separator)
  
@@ -88,11 +88,11 @@ print(separator)
  
 let message12 = "   #######    Работа 12 Введите слово  #######"
  
-var word12 = readInput(message: message12).filter {$0 != " "}.map {String($0)}
+var word12 = readInput(message: message12).filter { $0 != " " }.map { String($0) }
 var letters12 = [String: Int]()
 for character in word12 {
    
-    if (letters12.contains { $0.key == character}) {
+    if (letters12.contains { $0.key == character }) {
         letters12[character]! += 1
         
     } else {
@@ -101,7 +101,7 @@ for character in word12 {
     
 }
 
-print("Количество символов, встречающихся 1 раз = \(letters12.filter {$0.value == 1}.count)")
+print("Количество символов, встречающихся 1 раз = \(letters12.filter { $0.value == 1 }.count)")
 print(separator)
 
 //Работа 13.
@@ -117,7 +117,7 @@ var ship3 : (Int, Int)
 
 
 func getCoordinateFrom(input: String) -> (x: Int, y: Int)? {
-        let filteredInput = input.filter { $0 != " "}
+        let filteredInput = input.filter { $0 != " " }
         guard let charX = filteredInput.first, let x = Int(String(charX)), x <= 5,
               let charY = filteredInput.last, let y = Int(String(charY)), y <= 5
         else {
@@ -160,9 +160,9 @@ for elem in inputArray13 {
 var arX = [1, 2, 3, 4, 5]
 var arY = [1, 2, 3, 4, 5]
 print("Свободные строки")
-print(arX.filter{ !xArray.contains($0)}.map { String($0) }.joined(separator: " "))
+print(arX.filter{ !xArray.contains($0) }.map { String($0) }.joined(separator: " "))
 print("Свободные столбцы")
-print(arY.filter{ !yArray.contains($0)}.map { String($0) }.joined(separator: " "))
+print(arY.filter{ !yArray.contains($0) }.map { String($0) }.joined(separator: " "))
 print(separator)
 
 //Работа 14.
@@ -174,7 +174,7 @@ var stringArray14: [String]
 var numbers = [Int]()
 var firstThreeSum = Int()
 
-func getNumbers(input: [String]) -> [Int]?{
+func getNumbers(input: [String]) -> [Int]? {
     var numbers =  [Int]()
     for element in input {
         guard let number = Int(element), number > 0 else {
@@ -208,12 +208,12 @@ func generatePassword(numbers: [Int]) -> String {
     let passwordCharsNumber = "1234567890"
     let passwordCharsAdditional = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
     //var charsMeetConditions = ""
-    let passwodrUpper = String((0..<a).compactMap { _ in passwordCharsUpper.randomElement()})
-    let passwodrLower = String((0..<b).compactMap { _ in passwordCharsLower.randomElement()})
-    let passwodrNumber = String((0..<c).compactMap { _ in passwordCharsNumber.randomElement()})
+    let passwodrUpper = String((0..<a).compactMap { _ in passwordCharsUpper.randomElement() })
+    let passwodrLower = String((0..<b).compactMap { _ in passwordCharsLower.randomElement() })
+    let passwodrNumber = String((0..<c).compactMap { _ in passwordCharsNumber.randomElement() })
     let possibleFinalChars = passwodrUpper + passwodrLower + passwodrNumber
     if possibleFinalChars.count < n {
-        let additionalChar = String((0..<(n - possibleFinalChars.count)).compactMap { _ in passwordCharsAdditional.randomElement()})
+        let additionalChar = String((0..<(n - possibleFinalChars.count)).compactMap { _ in passwordCharsAdditional.randomElement() })
         finalPasword = possibleFinalChars + additionalChar
     } else {
         finalPasword = possibleFinalChars
@@ -269,7 +269,7 @@ func checkInputURL() -> String {
        // inputURL = "https://target.com/index.html?pass=12345&port=8080&cookie=&host=localhost"
         //inputURL = "https://target.com/index.html?port=8080&cookie=&host=localhost"
         inputURL = readInput(message: "")
-        if inputURL.contains("https://") && inputURL.contains("?") && inputURL.contains("=") { isCorrect = true}
+        if inputURL.contains("https://") && inputURL.contains("?") && inputURL.contains("=") { isCorrect = true }
     } while !isCorrect
     return inputURL
 }
@@ -309,7 +309,7 @@ func printURLParams(parameters: [String: String]) {
     print("port: \(parameters["port"] ?? "not found")")
     print("cookie: \(parameters["cookie"] ?? "not found")")
     print("host: \(parameters["host"] ?? "not found")")
-    if isPassword { print("password: \(parameters["pass"] ?? "")")}
+    if isPassword { print("password: \(parameters["pass"] ?? "")") }
     
 }
 
@@ -472,7 +472,7 @@ let alphabet20 = "abcdefghijklmnopqrstuvwxyz"
 let inputString20 = readInput(message: message20)
 var flag : Bool
 
-if alphabet20.contains(inputString20) {flag = true} else { flag = false }
+if alphabet20.contains(inputString20) { flag = true } else { flag = false }
 print(flag)
 print(separator)
 
