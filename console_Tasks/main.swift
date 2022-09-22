@@ -6,12 +6,12 @@
 //
 
 import Foundation
- let separator = "                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              "
+let separator = "                 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@              "
 //Работа 9.
 //Напишите программу, которая читает слово и печатает все буквы алфавита, которые не используются в этом слове. Учитываются только строчные буквы.
 
 var alphabet = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m","n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
- 
+
 var message9 = "   #######    Работа 9 Введите слово не пустое  #######"
 
 var res = [String]()
@@ -40,12 +40,12 @@ let result = checkWord(word: word)
 
 print(result)
 print(separator)
- 
- 
+
+
 //Работа 10
 //Напишите программу, которая читает комбинацию букв и цифр и печатает первую цифру в ней. Гарантируется, что в комбинации есть хотя бы одна цифра.
 var message10 = "   #######    Работа 10 Введите комбинацию букв и цифр  #######"
- 
+
 func findNumber(_ word: String) -> Bool {
     for character in word {
         if let intValue = character.wholeNumberValue {
@@ -55,19 +55,19 @@ func findNumber(_ word: String) -> Bool {
     }
     return false
 }
- 
+
 if !findNumber(readInput(message: message10)) { print("Цифр нет") }
 
 print(separator)
- 
- 
+
+
 // Работа 11
 // Напишите программу, которая читает букву и печатает все предшествующие буквы английского алфавита.
 let message11 = "   #######    Работа 11 Введите букву английского алфавита  #######"
 var alphabet11 =  ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m","n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
- 
+
 var res11 = ""
- 
+
 func printLetters(_ word: String) -> String {
     for number in alphabet11 {
         if number != word {
@@ -78,27 +78,25 @@ func printLetters(_ word: String) -> String {
     }
     return res11
 }
- 
+
 let letter = readInput(message: message11)
 print(printLetters(letter))
 print(separator)
- 
+
 // Работа 12
 //Напишите программу, которая читает слово и печатает количество символов, встречающихся в нем только один раз.
- 
+
 let message12 = "   #######    Работа 12 Введите слово  #######"
- 
+
 var word12 = readInput(message: message12).filter { $0 != " " }.map { String($0) }
 var letters12 = [String: Int]()
 for character in word12 {
-   
     if (letters12.contains { $0.key == character }) {
         letters12[character]! += 1
         
     } else {
         letters12[character] = 1
     }
-    
 }
 
 print("Количество символов, встречающихся 1 раз = \(letters12.filter { $0.value == 1 }.count)")
@@ -117,19 +115,19 @@ var ship3 : (Int, Int)
 
 
 func getCoordinateFrom(input: String) -> (x: Int, y: Int)? {
-        let filteredInput = input.filter { $0 != " " }
-        guard let charX = filteredInput.first, let x = Int(String(charX)), x <= 5,
-              let charY = filteredInput.last, let y = Int(String(charY)), y <= 5
-        else {
-            return nil
-        }
-        return (x: x, y: y)
-
+    let filteredInput = input.filter { $0 != " " }
+    guard let charX = filteredInput.first, let x = Int(String(charX)), x <= 5,
+          let charY = filteredInput.last, let y = Int(String(charY)), y <= 5
+    else {
+        return nil
+    }
+    return (x: x, y: y)
+    
 }
 
 func readTripleInput() -> [(Int , Int)]? {
     print(" #######    Работа 13 Введите на каждой строке координаты корабля через пробел (числа от 1 до 5). Корабли можно размещать только на свободных местах. Дублировать координаты нельзя  #######")
-
+    
     guard let ship1 = getCoordinateFrom(input: readInput(message: "")), ship1.x != 0, ship1.y != 0 else {
         return nil
     }
@@ -139,7 +137,7 @@ func readTripleInput() -> [(Int , Int)]? {
     guard let ship3 = getCoordinateFrom(input: readInput(message: "")), ship3.x != 0, ship3.y != 0 else {
         return nil
     }
-
+    
     if ship1 == ship2 || ship1 == ship3 || ship2 == ship3 { return nil }
     return [ship1, ship2, ship3]
 }
@@ -180,8 +178,8 @@ func getNumbers(input: [String]) -> [Int]? {
         guard let number = Int(element), number > 0 else {
             print("Не верный ввод")
             return nil
-                
-                }
+            
+        }
         numbers.append(number)
     }
     return numbers
@@ -207,7 +205,6 @@ func generatePassword(numbers: [Int]) -> String {
     let passwordCharsUpper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
     let passwordCharsNumber = "1234567890"
     let passwordCharsAdditional = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-    //var charsMeetConditions = ""
     let passwodrUpper = String((0..<a).compactMap { _ in passwordCharsUpper.randomElement() })
     let passwodrLower = String((0..<b).compactMap { _ in passwordCharsLower.randomElement() })
     let passwodrNumber = String((0..<c).compactMap { _ in passwordCharsNumber.randomElement() })
@@ -221,10 +218,10 @@ func generatePassword(numbers: [Int]) -> String {
     var finalShuffledPassword = String()
     
     repeat {
-    finalShuffledPassword = String(finalPasword.shuffled())
+        finalShuffledPassword = String(finalPasword.shuffled())
     } while !isPasswordChecked(pas: finalShuffledPassword)
     //print("проверка пароля \(isPasswordChecked(pas: "r6yy3M5qs3BDU"))")
-   return finalShuffledPassword
+    return finalShuffledPassword
 }
 
 
@@ -235,12 +232,12 @@ repeat {
     guard let number = getNumbers(input: stringArray14) else {
         continue
     }
-   numbers = number
+    numbers = number
     if numbers.count == 4 {
-    firstThreeSum = numbers.enumerated()
-        .filter { $0.0 < 3 }
-        .map{ $0.1 }
-        .reduce(0, +)
+        firstThreeSum = numbers.enumerated()
+            .filter { $0.0 < 3 }
+            .map{ $0.1 }
+            .reduce(0, +)
         if firstThreeSum <= numbers[3] {
             break
         }
@@ -257,16 +254,15 @@ print(separator)
 //Если вы найдете пароль (параметр pass ), вы должны еще раз вывести его значение после всех параметров, но уже с ключом password . Если URL-адрес не содержит параметра pass , ничего не печатайте после параметров. Но если присутствует параметр pass , его значение не может быть пустым
 
 
-
 var inputURL : String
 var password : String = ""
 
 func checkInputURL() -> String {
     var isCorrect: Bool = false
     var inputURL = String()
-    repeat{
+    repeat {
         print("   #######    Работа 15 Введите адрес сайта #######")
-       // inputURL = "https://target.com/index.html?pass=12345&port=8080&cookie=&host=localhost"
+        // inputURL = "https://target.com/index.html?pass=12345&port=8080&cookie=&host=localhost"
         //inputURL = "https://target.com/index.html?port=8080&cookie=&host=localhost"
         inputURL = readInput(message: "")
         if inputURL.contains("https://") && inputURL.contains("?") && inputURL.contains("=") { isCorrect = true }
@@ -293,10 +289,9 @@ func getURLParams(input: String) -> [String: String] {
                 paramDict[key] = "not found"
                 
             }
+        }
+        
     }
-   
-}
-    //print(paramDict)
     return paramDict
 }
 
@@ -315,7 +310,7 @@ func printURLParams(parameters: [String: String]) {
 
 inputURL = checkInputURL()
 let params = getURLParams(input: inputURL)
-    printURLParams(parameters: params)
+printURLParams(parameters: params)
 print(separator)
 
 
@@ -328,10 +323,9 @@ print(separator)
 //Например, слово «schedule» считается неблагозвучным, потому что в нем три согласных подряд: «sch». Чтобы создать благозвучное слово, вам нужно добавить любую гласную между «s» и «c» или между «c» и «h».
 
 
-//ошибки ввода- цифры не английские буквы пробелы
 let vowels = "aeiouy"
 let consonants = "bcdfghjklmnpqrstvwxz"
-var string16 : String = ""//readInput()
+var string16 : String = ""
 var helpingArray : String = ""
 
 func containsOnlyLetters(input: String) -> Bool {
@@ -343,32 +337,31 @@ func containsOnlyLetters(input: String) -> Bool {
     return true
 }
 
-repeat{
+repeat {
     let message16 = "   #######    Работа 16 Введите слово на английском языке (проверяем на благозвучность) #######"
     string16 = readInput(message: message16).lowercased()
-}
-while !containsOnlyLetters(input: string16.lowercased())
-    
-func letterCountIn(input: String) -> String {
-   var currentLetter: Character?
-   var returnValue = ""
-   var letterCounter = 0
-   for letter in input {
-      if letter == currentLetter {
-         letterCounter += 1
-      } else {
-         if let current = currentLetter {
-            returnValue.append("\(current)\(letterCounter)")
-}
-          currentLetter = letter
-                   letterCounter = 1
-                }
-          }
-             if let current = currentLetter {
+} while !containsOnlyLetters(input: string16.lowercased())
+        
+        func letterCountIn(input: String) -> String {
+    var currentLetter: Character?
+    var returnValue = ""
+    var letterCounter = 0
+    for letter in input {
+        if letter == currentLetter {
+            letterCounter += 1
+        } else {
+            if let current = currentLetter {
                 returnValue.append("\(current)\(letterCounter)")
-          }
-             return returnValue
-          }
+            }
+            currentLetter = letter
+            letterCounter = 1
+        }
+    }
+    if let current = currentLetter {
+        returnValue.append("\(current)\(letterCounter)")
+    }
+    return returnValue
+}
 
 
 //заменяем гласные на "v" а согласные на "c"
@@ -378,7 +371,7 @@ for elem in string16.lowercased() {
     } else if consonants.contains(elem) {
         helpingArray.append("c") }
 }
-    
+
 let arrayWithLetterCount = letterCountIn(input: String(helpingArray))
 
 var minCharCount : Int = 0
@@ -388,7 +381,7 @@ for elem in arrayWithLetterCount {
         minCharCount = minCharCount + (Int(floor(Double(number / 2))) - 1)
     } else if number % 2 != 0 && number >= 3 {
         minCharCount = minCharCount + Int(floor(Double(number / 2)))
-        }
+    }
 }
 
 print(minCharCount)
@@ -398,9 +391,9 @@ print(separator)
 //Напишите программу, которая читает строку s и целое число n , а затем перемещает первые n символов s в конец строки. Программа должна вывести измененную строку. Если n больше длины строки, он должен вывести строку без изменений.
 //Формат входных данных
 //Единственная входная строка содержит s и n , разделенные пробелом.
- 
+
 let message17 = "   #######    Работа 17 Введите слово и через пробел целое число на одной строке #######"
- 
+
 var number17 = Int()
 var word17 = String()
 var arrayInput: [String]
@@ -412,12 +405,10 @@ repeat {
     number17 = number
 } while arrayInput.count < 2
 
-//word17 = arrayInput[0]
-//number17 = (arrayInput[1] as NSString).integerValue
 if number17 > word17.count {
     print(word17)
 } else {
-print(String(word17.dropFirst(number17) + word17.prefix(number17)))
+    print(String(word17.dropFirst(number17) + word17.prefix(number17)))
 }
 
 print(separator)
@@ -429,16 +420,16 @@ let message18 = "   #######    Работа 18 Введите слово  ######
 var input18 = readInput(message: message18)
 //вычисляем середину слова
 let ind = Int(floor(Double(input18.count / 2)))
-    if input18.count % 2 == 0 {
-        let index = input18.index(input18.startIndex, offsetBy: ind - 1)
-        let range = index..<input18.index(index, offsetBy: 2)
-        input18.removeSubrange(range)
-        print(input18)
-    } else {
-        let index = input18.index(input18.startIndex, offsetBy: ind)
-        input18.remove(at: index)
-        print(input18)
-    }
+if input18.count % 2 == 0 {
+    let index = input18.index(input18.startIndex, offsetBy: ind - 1)
+    let range = index..<input18.index(index, offsetBy: 2)
+    input18.removeSubrange(range)
+    print(input18)
+} else {
+    let index = input18.index(input18.startIndex, offsetBy: ind)
+    input18.remove(at: index)
+    print(input18)
+}
 print(separator)
 
 
@@ -455,7 +446,7 @@ let arrayString19 = string19.components(separatedBy: " ")
 var count = 0
 for str in arrayString19 {
     if str.contains(substring19) {
-       count += 1
+        count += 1
     }
 }
 print("Подстрока \(substring19) входит в данную строку \(count) раза")
@@ -484,11 +475,10 @@ print(separator)
 var inputString21 = String()
 repeat {
     let message21 = "   #######    Работа 21 Введите число N с четным количеством цифр  #######"
-
-     inputString21 = readInput(message: message21)
-}
-while (inputString21.count % 2 != 0) || inputString21.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) != nil
-
+    
+    inputString21 = readInput(message: message21)
+} while (inputString21.count % 2 != 0) || inputString21.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) != nil
+        
 let digits = inputString21.compactMap{ $0.wholeNumberValue }
 
 let firstSumm = digits.enumerated()
@@ -524,11 +514,10 @@ String(lowercased.reversed()) == lowercased ? print("Yes") : print("No")
 var inputString23 = String()
 repeat {
     let message23 = "   #######    Работа 23 Введите число, состоящее из 6 цифр  #######"
-
-     inputString23 = readInput(message: message23)
-}
-while (inputString23.count != 6) || inputString23.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) != nil
-
+    
+    inputString23 = readInput(message: message23)
+} while (inputString23.count != 6) || inputString23.rangeOfCharacter(from: CharacterSet.decimalDigits.inverted) != nil
+        
 let digitsInput = inputString23.compactMap{ $0.wholeNumberValue }
 
 let firstPart = digitsInput.enumerated()

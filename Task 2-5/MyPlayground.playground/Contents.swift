@@ -8,19 +8,26 @@ import Foundation
 
 struct MathNumbers {
     static var array = Array(1...100)
-    static let filtered = array.filter{$0 % 2 != 0}.filter{$0 % 3 == 0 }
+//    static let filtered = array.filter { number in
+//        if isEven(_:number) && checkNumber(number: number, divider: 3) {
+//        return number
+//        }
+//    }
     
-    static func checkNumber(number a: Int,divider num: Int) -> Bool {
+    static var filtered = array.filter { checkNumber(number: $0, divider: 3) && isOdd($0) }
+    
+    static func checkNumber(number a: Int, divider num: Int) -> Bool {
         a % num == 0
     }
     
-    static func isEven(_ num: Int) -> Bool {
-        return num % 2 == 0
+    static func isOdd(_ num: Int) -> Bool {
+        num % 2 != 0
     }
 }
 
+
 //проверяем число на четность
-print(MathNumbers.isEven(5))
+print(MathNumbers.isOdd(5))
 //проверяем делится ли число на 3
 print(MathNumbers.checkNumber(number: 6, divider: 3))
 print("Исходный массив \(MathNumbers.array)")

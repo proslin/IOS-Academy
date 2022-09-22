@@ -65,10 +65,10 @@ struct MathTask {
             print("Размер вклада и процент должны быть больше 0")
             return
         }
-        var sum1 = NSDecimalNumber(string: String(amount))
-        var sum = NSDecimalNumber(value: amount)
+        var sum = NSDecimalNumber(string: String(amount))
+        let sum1 = NSDecimalNumber(value: amount)
         print(sum)
-        print("из стринга \(sum1)")
+        print("из стринга \(sum)")
         let prcnt = NSDecimalNumber(string: String(percent))
         var accumulatedInterest = NSDecimalNumber.zero
         let behavior = NSDecimalNumberHandler(roundingMode: .plain, scale: 5, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: true)
