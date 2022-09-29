@@ -8,12 +8,7 @@ import Foundation
 
 struct MathNumbers {
     static var array = Array(1...100)
-//    static let filtered = array.filter { number in
-//        if isEven(_:number) && checkNumber(number: number, divider: 3) {
-//        return number
-//        }
-//    }
-    
+
     static var filtered = array.filter { checkNumber(number: $0, divider: 3) && isOdd($0) }
     
     static func checkNumber(number a: Int, divider num: Int) -> Bool {
@@ -43,51 +38,112 @@ print("Отфильтрованный массив \(MathNumbers.filtered)")
 //Вывести значения свойств экземпляров в консоль.
 
 enum CarState {
-    case changeEngineState(_ isStarted: Bool)
-    case changeWindowState(_ isOpened: Bool)
-    case loadTrunk(_ volume: Int), unloadTrunk(_ volume: Int)
+    case changeEngineState(_ start: Bool)
+    case changeWindowState(_ open: Bool)
+    case loadTrunk(_ volume: Int)
+    case unloadTrunk(_ volume: Int)
 }
 
 struct Car {
+    ///марка автомобиля
     let mark: String
+    /// год выпуска
     let year: Int
+    /// объем багажника
     var trunkVolume: Int
+    /// заполненный объем багажника
     var loadedTrunkVolume: Int = 0
+    /// запущен ли двигатель
     var isEngineStarted: Bool = false
+    /// открыты ли окна
     var isWindowOpened: Bool = false
     
     mutating func doAction(_ action: CarState) {
         switch action {
-        case .changeEngineState(let isStarted):
-            isEngineStarted = isStarted
-        case .changeWindowState(let isOpened):
-            isWindowOpened = isOpened
+        case .changeEngineState(let start):
+            if start ==  true && isEngineStarted == true {
+                print("Двигатель уже запущен")
+            } else if start == false && isEngineStarted == false {
+                print("Двигатель уже заглушен")
+            } else {
+                isEngineStarted = start
+                start ? print("Запустили двигатель") : print("Заглушили двигатель")
+            }
+        case .changeWindowState(let open):
+            if open ==  true && isWindowOpened == true {
+                print("Окна уже открыты")
+            } else if open == false && isWindowOpened == false {
+                print("Окна уже зарыты")
+            } else {
+                isWindowOpened = open
+                open ? print("Открыли окна") : print("Закрыли окна")
+            }
         case .loadTrunk(let volume):
-            loadedTrunkVolume = volume
+            if volume > (trunkVolume - loadedTrunkVolume) {
+                print("Груз больше чем объем багажника")
+            } else {
+            loadedTrunkVolume += volume
+            print("Загрузили \(volume)")
+            }
         case .unloadTrunk(let volume):
-            loadedTrunkVolume = -volume
+            if volume > loadedTrunkVolume {
+                print("Объем груза больше чем занято в багажнике")
+            } else {
+              loadedTrunkVolume -= volume
+                print("Выгрузили \(volume)")
+            }
         }
     }
 }
 
 struct Trunk {
+    ///марка грузовика
     let mark: String
+    /// год выпуска
     let year: Int
+    /// объем кузова
     var trunkBackVolume: Int
+    /// заполненный объем кузова
     var loadedTrunkBackVolume: Int = 0
+    /// запущен ли двигатель
     var isEngineStarted: Bool = false
+    /// открыты ли окна
     var isWindowOpened: Bool = false
     
     mutating func doAction(_ action: CarState) {
         switch action {
-        case .changeEngineState(let isStarted):
-            isEngineStarted = isStarted
-        case .changeWindowState(let isOpened):
-            isWindowOpened = isOpened
+        case .changeEngineState(let start):
+            if start ==  true && isEngineStarted == true {
+                print("Двигатель уже запущен")
+            } else if start == false && isEngineStarted == false {
+                print("Двигатель уже заглушен")
+            } else {
+                isEngineStarted = start
+                start ? print("Запустили двигатель") : print("Заглушили двигатель")
+            }
+        case .changeWindowState(let open):
+            if open ==  true && isWindowOpened == true {
+                print("Окна уже открыты")
+            } else if open == false && isWindowOpened == false {
+                print("Окна уже зарыты")
+            } else {
+                isWindowOpened = open
+                open ? print("Открыли окна") : print("Закрыли окна")
+            }
         case .loadTrunk(let volume):
-            loadedTrunkBackVolume = volume
+            if volume > (trunkBackVolume - loadedTrunkBackVolume) {
+                print("Груз больше чем объем багажника")
+            } else {
+                loadedTrunkBackVolume += volume
+                print("Загрузили \(volume)")
+            }
         case .unloadTrunk(let volume):
-            loadedTrunkBackVolume = -volume
+            if volume > loadedTrunkBackVolume {
+                print("Объем груза больше чем занято в багажнике")
+            } else {
+                loadedTrunkBackVolume -= volume
+                print("Выгрузили \(volume)")
+            }
         }
     }
 }
@@ -104,9 +160,20 @@ print(car1)
 var car2 = Car(mark: "Audi", year: 2005, trunkVolume: 200)
 print("Машина \(car2)")
 car2.doAction(.changeWindowState(true))
+car2.doAction(.changeWindowState(true))
 car2.doAction(.changeEngineState(true))
+car2.doAction(.changeEngineState(true))
+car2.doAction(.changeEngineState(false))
+car2.doAction(.changeEngineState(false))
+car2.doAction(.loadTrunk(300))
+car2.doAction(.loadTrunk(100))
+car2.doAction(.loadTrunk(200))
+car2.doAction(.loadTrunk(50))
 print("Машина после преобразований \(car2)")
-
+car2.doAction(.unloadTrunk(50))
+car2.doAction(.unloadTrunk(60))
+car2.doAction(.unloadTrunk(50))
+print("Машина после преобразований \(car2)")
 var trunk1 = Trunk(mark: "Suzuki", year: 1987, trunkBackVolume: 2000)
 print("Грузовик \(trunk1)")
 trunk1.doAction(.changeEngineState(true))
@@ -147,7 +214,42 @@ class CarClass {
     }
     
     func doAction(_ action: CarStateClass) {
-    
+        switch action {
+        case .changeEngineState(let start):
+            if start ==  true && isEngineStarted == true {
+                print("Двигатель уже запущен")
+            } else if start == false && isEngineStarted == false {
+                print("Двигатель уже заглушен")
+            } else {
+                isEngineStarted = start
+                start ? print("Запустили двигатель") : print("Заглушили двигатель")
+            }
+        case .changeWindowState(let open):
+            if open ==  true && isWindowOpened == true {
+                print("Окна уже открыты")
+            } else if open == false && isWindowOpened == false {
+                print("Окна уже зарыты")
+            } else {
+                isWindowOpened = open
+                open ? print("Открыли окна") : print("Закрыли окна")
+            }
+        case .loadTrunk(let volume):
+            if volume > (trunkVolume - loadedTrunkVolume) {
+                print("Груз больше чем объем багажника")
+            } else {
+                loadedTrunkVolume += volume
+                print("Загрузили \(volume)")
+            }
+        case .unloadTrunk(let volume):
+            if volume > loadedTrunkVolume {
+                print("Объем груза больше чем занято в багажнике")
+            } else {
+                loadedTrunkVolume -= volume
+                print("Выгрузили \(volume)")
+            }
+        default:
+            break
+        }
     }
 }
 
@@ -168,10 +270,10 @@ class SportCar: CarClass {
         case .useNitro(let isUsed):
             isNitroUsed = isUsed
         default:
-            break
-        
+            super.doAction(action)
+            
+        }
     }
-}
 }
 
 class TrunkCar: CarClass {
@@ -193,11 +295,23 @@ class TrunkCar: CarClass {
     }
 }
 
+extension SportCar: CustomStringConvertible {
+    var description: String {
+        return "\(mark) год выпуска \(year) запущен ли двигатель \(isEngineStarted) объем багажника \(trunkVolume) количество мест \(numberOfSeats) \(isNitroUsed ? "nitro use" : "nitro do not use") \(isHatchOpened ? "люк открыт" : "люк закрыт") "
+    }
+}
+
+
 
 var sportcar1 = SportCar(mark: "Mustang", year: 1960, trunkVolume: 100, numberOfSeats: 2)
 print("Спорткар \(sportcar1.isNitroUsed)")
 print("Спорткар \(sportcar1.isHatchOpened)")
+sportcar1.doAction(.changeEngineState(true))
 sportcar1.doAction(.useNitro(true))
+print(sportcar1)
+sportcar1.doAction(.changeEngineState(false))
+sportcar1.doAction(.changeEngineState(false))
+print(sportcar1)
 print("Спорткар isNitroUsed \(sportcar1.isNitroUsed)")
 sportcar1.doAction(.openHatch(true))
 print("Спорткар isHatchOpened \(sportcar1.isHatchOpened)")
@@ -309,11 +423,12 @@ class TrunkCarProtocol: CarProtocol {
         }
     }
 }
-    extension TrunkCarProtocol: CustomStringConvertible {
-        var description: String {
-            return "\(mark) год выпуска \(year) объем багажника \(trunkVolume) количество осей \(numberOfAxis) \(isTrailerHang ? "прицеп присоединен" : "прицеп не присоединен") "
-        }
+    
+extension TrunkCarProtocol: CustomStringConvertible {
+    var description: String {
+        return "\(mark) год выпуска \(year) объем багажника \(trunkVolume) количество осей \(numberOfAxis) \(isTrailerHang ? "прицеп присоединен" : "прицеп не присоединен") "
     }
+}
 
 
 print("       ###### Задача 5 #######")

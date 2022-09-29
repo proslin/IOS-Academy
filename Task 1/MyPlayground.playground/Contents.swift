@@ -29,7 +29,7 @@ struct MathTask {
             print("Дискриминант меньше 0. Действительных корней нет.")
         case 0:
             x1 = -b / 2 * a
-            if x1 == -0.0 { x1 = -x1}
+            x1 = (x1 == -0.0) ? -x1 : x1
             print("Дискриминант равен 0.  У уравнения есть один корень x1 = \(x1)")
         default:
             x1 = (-b + sqrt(d)) / (2 * a)
@@ -37,7 +37,7 @@ struct MathTask {
             x2 = (-b - sqrt(d)) / (2 * a)
             let roundedX2 = roundedToPlaces(input: x2, toPlaces: 5)
             
-            print("Дискриминант больше 0.  У уравнения есть два корня x1 = \(roundedX1), x2 = \(roundedX2)")
+            print("Дискриминант больше 0.  У уравнения есть два корня x1 = \(roundedX1) \(x1), x2 = \(roundedX2)")
             
         }
     }
@@ -65,13 +65,14 @@ struct MathTask {
             print("Размер вклада и процент должны быть больше 0")
             return
         }
-        var sum = NSDecimalNumber(string: String(amount))
-        let sum1 = NSDecimalNumber(value: amount)
-        print(sum)
-        print("из стринга \(sum)")
+        //var sum = NSDecimalNumber(string: String(amount))
+        var sum = NSDecimalNumber(value: amount)
+//        print(sum)
+//        print("из стринга \(sum)")
         let prcnt = NSDecimalNumber(string: String(percent))
         var accumulatedInterest = NSDecimalNumber.zero
-        let behavior = NSDecimalNumberHandler(roundingMode: .plain, scale: 5, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: true)
+        let behavior = NSDecimalNumberHandler(roundingMode: .down, scale: 4, raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: true)
+        //NSDecimalNumberHandler(roundingMode: .down, scale: 4)
         for i in 1...5 {
             switch capitalization {
             case .capital:
@@ -89,7 +90,8 @@ struct MathTask {
 }
 
 
-MathTask.quadEquation(a: 8, b: -11, c: -17)
+MathTask.quadEquation(a: 8, b: 0, c: 0)
+MathTask.quadEquation(a: 8, b: -11, c: -15)
 MathTask.triangle(a: -22, b: 3)
-MathTask.depositAmount(amount: -2000, percent: 7, capitalization: .noCapital)
-MathTask.depositAmount(amount: 2000.12381, percent: 7, capitalization: .capital)
+MathTask.depositAmount(amount: 2000, percent: 7, capitalization: .noCapital)
+MathTask.depositAmount(amount: 2000, percent: 7, capitalization: .capital)
