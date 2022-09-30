@@ -8,7 +8,7 @@ import Foundation
 
 struct MathNumbers {
     static var array = Array(1...100)
-
+    
     static var filtered = array.filter { checkNumber(number: $0, divider: 3) && isOdd($0) }
     
     static func checkNumber(number a: Int, divider num: Int) -> Bool {
@@ -82,14 +82,14 @@ struct Car {
             if volume > (trunkVolume - loadedTrunkVolume) {
                 print("Груз больше чем объем багажника")
             } else {
-            loadedTrunkVolume += volume
-            print("Загрузили \(volume)")
+                loadedTrunkVolume += volume
+                print("Загрузили \(volume)")
             }
         case .unloadTrunk(let volume):
             if volume > loadedTrunkVolume {
                 print("Объем груза больше чем занято в багажнике")
             } else {
-              loadedTrunkVolume -= volume
+                loadedTrunkVolume -= volume
                 print("Выгрузили \(volume)")
             }
         }
@@ -423,7 +423,7 @@ class TrunkCarProtocol: CarProtocol {
         }
     }
 }
-    
+
 extension TrunkCarProtocol: CustomStringConvertible {
     var description: String {
         return "\(mark) год выпуска \(year) объем багажника \(trunkVolume) количество осей \(numberOfAxis) \(isTrailerHang ? "прицеп присоединен" : "прицеп не присоединен") "

@@ -42,11 +42,12 @@ func checkWithRemove(word: String) -> [String] {
 }
 
 
-func readInput(message: String) -> String {
+func readInput(message: String, isReturnEmpry: Bool = false) -> String {
     var inputStr: String
     repeat {
         print(message)
         inputStr = readLine() ?? ""
+        if isReturnEmpry { return inputStr }
     } while inputStr.isEmpty
     
     return inputStr
@@ -119,6 +120,7 @@ func findSubrange(_ letter: String) -> String {
     print("Вы ввели не подходящий символ")
     return alphabetString11
 }
+
 
 var letter = String()
 
@@ -245,7 +247,7 @@ func isPasswordChecked(pas: String) -> Bool {
 }
 
 func generatePassword(numbers: [Int]) -> String {
-    var finalPasword: String
+    var finalPaswordChars: String
     let a = numbers[0]
     let b = numbers[1]
     let c = numbers[2]
@@ -260,26 +262,26 @@ func generatePassword(numbers: [Int]) -> String {
     let possibleFinalChars = passwodrUpper + passwodrLower + passwodrNumber
     if possibleFinalChars.count < n {
         let additionalChar = String((0..<(n - possibleFinalChars.count)).compactMap { _ in passwordCharsAdditional.randomElement() })
-        finalPasword = possibleFinalChars + additionalChar
+        finalPaswordChars = possibleFinalChars + additionalChar
     } else {
-        finalPasword = possibleFinalChars
+        finalPaswordChars = possibleFinalChars
     }
-    //print("проверка пароля \(isPasswordChecked(pas: "r6yy3M5qs3BDU"))")
-    return finalPasword
+    return finalPaswordChars
 }
 
 func getCheckedPassword() -> String {
-    var finalPassword = generatePassword(numbers: numbers)
+    let finalPasswordChars = generatePassword(numbers: numbers)
+    var checkedPassword: String
     var step = 0
     
     repeat {
         step += 1
-        finalPassword = String(finalPassword.shuffled())
+        checkedPassword = String(finalPasswordChars.shuffled())
         if step == 10 {
-            finalPassword = generatePassword(numbers: numbers)
+            checkedPassword = generatePassword(numbers: numbers)
         }
-    } while !isPasswordChecked(pas: finalPassword)
-    return finalPassword
+    } while !isPasswordChecked(pas: checkedPassword)
+    return checkedPassword
 }
 
 repeat {
@@ -320,7 +322,9 @@ func getParamsFromURL() {
             print("Не корректный ввод")
             continue
         }
-        guard let queryItems = urlComponents.queryItems else { break }
+        guard let queryItems = urlComponents.queryItems else {
+            print("Не корректный ввод")
+            continue }
         var isPassword = false
         var password: String = ""
         for elem in queryItems {
@@ -445,10 +449,12 @@ print(separator)
 //Напишите программу, которая читает строку, а затем выводит строку без среднего символа, если длина нечетная, и без двух средних символов, если длина четная.
 let message18 = "   #######    Работа 18 Введите слово не пустое  #######"
 
-var input18 = readInput(message: message18)
+var input18 = readInput(message: message18, isReturnEmpry: true)
 //вычисляем середину слова
 let ind = input18.count / 2
-if input18.count % 2 == 0 {
+if input18.count < 3 {
+    print("Ваш результат: пустая строка")
+} else if input18.count % 2 == 0 {
     let index = input18.index(input18.startIndex, offsetBy: ind - 1)
     let range = index..<input18.index(index, offsetBy: 2)
     input18.removeSubrange(range)
@@ -473,13 +479,11 @@ var substring19 = readInput(message: "")
 var count = 0
 var elem: String
 
-
 let additionalArr = string19.components(separatedBy: substring19)
 print("Подстрока \(substring19) входит в данную строку \(additionalArr.count - 1) раза")
 
 ///вариант с удалением подстроки из строки
 while string19.contains(substring19) {
-    
     guard let range = string19.range(of: substring19) else {
         print("Строка не содержит данную подстроку \(substring19)")
         break }
@@ -487,13 +491,6 @@ while string19.contains(substring19) {
     string19.removeSubrange(range)
 }
 
-//let arrayString19 = string19.components(separatedBy: " ")
-//
-//for str in arrayString19 {
-//    if str.contains(substring19) {
-//        count += 1
-//    }
-//}
 print("Подстрока \(substring19) входит в данную строку \(count) раза")
 
 
@@ -527,20 +524,11 @@ repeat {
 let digits = inputString21.compactMap{ $0.wholeNumberValue }
 var firstSumm: Int = 0
 var secondSumm: Int = 0
+let digCount = digits.count
 
-//let firstSumm = digits.enumerated()
-//    .filter { $0.0 <= digits.count / 2 - 1 }
-//    .map { $0.1 }
-//    .reduce(0, +)
-//
-//let secondSumm = digits.enumerated()
-//    .filter { $0.0 > digits.count / 2 - 1 }
-//    .map { $0.1 }
-//    .reduce(0, +)
-
-for idx in 0..<digits.count / 2 {
-    firstSumm += digits[idx]
-    secondSumm += digits[digits.count - 1 - idx]
+for i in 0..<digCount / 2 {
+    firstSumm += digits[i]
+    secondSumm += digits[digCount - 1 - i]
 }
 
 print(firstSumm == secondSumm ? "Yes" : "No")
@@ -574,16 +562,6 @@ let digitsInput = inputString23.compactMap{ $0.wholeNumberValue }
 
 var firstPart: Int = 0
 var secondPart: Int = 0
-
-//let firstPart = digitsInput.enumerated()
-//    .filter { $0.0 <= digits.count / 2 - 1 }
-//    .map { $0.1 }
-//    .reduce(0, +)
-//
-//let secondPart = digitsInput.enumerated()
-//    .filter { $0.0 > digits.count / 2 - 1 }
-//    .map { $0.1 }
-//    .reduce(0, +)
 
 for idx in 0..<digits.count / 2 {
     firstPart += digits[idx]
